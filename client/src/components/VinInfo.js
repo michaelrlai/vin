@@ -1,31 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { VinContext } from "../context/VinContext";
 
 const VinInfo = () => {
-  const { currentVin, useCurrentVin } = useContext(VinContext);
+  const { currentVin } = useContext(VinContext);
+  const [infoDisplayed, setInfoDisplayed] = useState({});
 
-  return (
-    <div className="row mt-3">
-      <div className="col"></div>
-      <div className="col-6">
-        <table className="table table-bordered text-center">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
+  useEffect(() => {
+    setInfoDisplayed({
+      VIN: currentVin.VIN,
+      Year: currentVin.ModelYear,
+      Make: currentVin.Make,
+      Model: currentVin.Model,
+      Trim: currentVin.Trim,
+      "Vehicle Type": currentVin.VehicleType,
+    });
+  }, [currentVin]);
+
+  return infoDisplayed.VIN ? (
+    <table className="table table-bordered text-center mt-3">
+      <tbody>
+        {Object.entries(infoDisplayed).map((rowData) => {
+          return (
+            <tr key={rowData[1]}>
+              <th className="col-2">{rowData[0]}</th>
+              <td className="col-3">{rowData[1]}</td>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div className="col"></div>
-    </div>
-  );
+          );
+        })}
+      </tbody>
+    </table>
+  ) : null;
 };
 
 export default VinInfo;
