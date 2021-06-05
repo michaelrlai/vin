@@ -7,7 +7,7 @@ const vehicleApi = axios.create({
   baseURL: "https://vpic.nhtsa.dot.gov/api",
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 5001;
 
 app.use(cors());
 
